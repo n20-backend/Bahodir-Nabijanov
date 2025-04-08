@@ -1,7 +1,9 @@
 import pg from "pg";
-const { Client } = pg;
+import dotenv from 'dotenv';
 
-const client = new Client({
+dotenv.config();
+
+const pool = new pg.Pool({
     user: process.env.PG_USER || "postgres",
     host: process.env.PG_HOST || "localhost",
     database: process.env.PG_DATABASE || "talaba",
@@ -9,15 +11,13 @@ const client = new Client({
     port: process.env.PG_PORT || 5432,
 });
 
-async function connectToDatabase() {
-    try {
-        await client.connect();
-        console.log('PostgreSQL muvaffaqiyatli ulandi!');
-    } catch (err) {
-        console.error('Ulanishda xatolik!', err);
+pool.connect((err) => {
+    if(err) {
+        console.log('Ulanishda xatolik!');
+    } else {
+        console.log('Muvaffaqiyat!');
     }
-}
+});
 
-connectToDatabase();
 
-export default client;
+export default pool;
