@@ -4,6 +4,9 @@ import { facultyRouter, usersRouter, coursesRouter, studentsRouter, gradeRouter}
 const app = express();
 
 app.use(express.json());
+app.get('/', (req, res) => {
+    res.send("Sarguzasht sari olg'a");
+});
 
 app.use('/faculty', facultyRouter);
 app.use('/user', usersRouter);
